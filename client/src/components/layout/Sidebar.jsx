@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaWallet,
@@ -13,9 +13,25 @@ const Sidebar = () => {
   const location = useLocation();
   const { user } = useContext(AuthContext);
 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear auth data (adjust based on your setup)
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    // If you have context logout function, use that instead
+    // logout();
+
+    navigate("/login");
+  };
+
+  const userId = user?.id || user?._id;
+
   console.log("USER OBJECT:", user);
-  console.log("USER ID:", user?._id);
+  console.log("USER ID:", user?.id);
   console.log("CURRENT PATH:", location.pathname);
+  console.log("FULL USER:", user);
 
   if (!user) {
     return (
@@ -25,17 +41,20 @@ const Sidebar = () => {
     );
   }
 
-  // ✅ Dynamic dashboard path
-  const dashboardPath = `/expense-tracker/${user._id}/dashboard`;
+  console.log("USER ID:", userId);
 
-  // ✅ Exact match checks
+  const dashboardPath = `/expense-tracker/${userId}/dashboard`;
+
   const isDashboardActive = location.pathname === dashboardPath;
 
-  const isExpensesActive = location.pathname === "/expense-tracker/expenses";
+  const isExpensesActive =
+    location.pathname === `/expense-tracker/${userId}/expenses`;
 
-  const isAnalyticsActive = location.pathname === "/expense-tracker/analytics";
+  const isAnalyticsActive =
+    location.pathname === `/expense-tracker/${userId}/analytics`;
 
-  const isSettingsActive = location.pathname === "/expense-tracker/settings";
+  const isSettingsActive =
+    location.pathname === `/expense-tracker/${userId}/settings`;
 
   return (
     <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0">
@@ -78,7 +97,7 @@ const Sidebar = () => {
 
         {/* Expenses */}
         <Link
-          to="/expense-tracker/expenses"
+          to={`/expense-tracker/${userId}/expenses`}
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
             isExpensesActive
               ? "bg-blue-600 text-white"
@@ -91,7 +110,7 @@ const Sidebar = () => {
 
         {/* Analytics */}
         <Link
-          to="/expense-tracker/analytics"
+          to={`/expense-tracker/${userId}/analytics`}
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
             isAnalyticsActive
               ? "bg-blue-600 text-white"
@@ -104,7 +123,7 @@ const Sidebar = () => {
 
         {/* Settings */}
         <Link
-          to="/expense-tracker/settings"
+          to={`/expense-tracker/${userId}/settings`}
           className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
             isSettingsActive
               ? "bg-blue-600 text-white"
@@ -118,7 +137,10 @@ const Sidebar = () => {
 
       {/* Logout */}
       <div className="p-4 border-t border-slate-800">
-        <button className="flex items-center gap-3 px-3 py-2 text-slate-400 hover:bg-slate-800 rounded-lg transition-colors w-full text-left">
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-3 py-2 text-slate-400 hover:bg-slate-800 rounded-lg transition-colors w-full text-left cursor-pointer"
+        >
           <FaSignOutAlt className="w-4 h-4" />
           <span className="text-sm">Logout</span>
         </button>

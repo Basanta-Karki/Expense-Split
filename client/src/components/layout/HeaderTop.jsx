@@ -84,7 +84,7 @@ const HeaderTop = () => {
           {/* Profile */}
           <div className="flex items-center gap-3">
             {/* Avatar */}
-            <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-sm font-bold">
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center text-sm font-bold">
               {profileImage ? (
                 <img
                   src={profileImage}

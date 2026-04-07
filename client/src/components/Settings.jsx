@@ -218,8 +218,8 @@ const Settings = () => {
               <div className="flex flex-col items-center gap-2">
                 <UploadButton
                   endpoint="profileUploader"
-                  input={{ user_id: user?._id }}
-                  headers={{ "user-id": user?._id }}
+                  input={{ user_id: user?.id }}
+                  headers={{ "user-id": user?.id }}
                   onUploadBegin={() => setIsUploading(true)}
                   onClientUploadComplete={(res) => {
                     setIsUploading(false);
