@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import transporter from "../config/nodemailer.js";
+import { getCookieConfig } from "../config/cookieConfig.js";
 
 // Generate token
 const generateToken = (id) => {
@@ -143,11 +144,12 @@ export const login = async (req, res) => {
 
     const token = generateToken(user._id);
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "strict",
+    // });
+    res.cookie("token", token, getCookieConfig());
 
     res.json({
       success: true,
@@ -174,8 +176,6 @@ export const logout = (req, res) => {
 
   res.json({ message: "Logged out" });
 };
-
-
 
 export const sendResetOtp = async (req, res) => {
   const { email } = req.body;
@@ -369,11 +369,11 @@ export const updatePassword = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const userId = req.userId;
-    const { name, email } = req.body;
+    const { name } = req.body;
 
     const user = await User.findByIdAndUpdate(
       userId,
-      { name, email },
+      { name },
       { new: true },
     ).select("-password");
 

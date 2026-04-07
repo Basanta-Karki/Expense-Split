@@ -30,7 +30,13 @@ router.get("/is-auth", protect, async (req, res) => {
 
   res.json({
     success: true,
-    user,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      profile: user.profile,
+      isVerified: user.isVerified,
+    },
   });
 });
 

@@ -45,8 +45,14 @@ function App() {
               />
 
               {/* Expenses List Page */}
-              <Route path="/expense-tracker/expenses" element={<Expenses />} />
-              <Route path="/expense-tracker/settings" element={<Settings />} />
+              <Route
+                path="/expense-tracker/:id/expenses"
+                element={<Expenses />}
+              />
+              <Route
+                path="/expense-tracker/:id/settings"
+                element={<Settings />}
+              />
 
               {/* Protected Routes */}
               {/* <Route

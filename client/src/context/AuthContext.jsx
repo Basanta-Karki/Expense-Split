@@ -69,7 +69,7 @@
 //   );
 // };
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useContext } from "react";
 import api from "../api/api";
 
 export const AuthContext = createContext();
@@ -80,7 +80,10 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   // ✅ Check auth state on app load
+  // ✅ In context/AuthContext.jsx
+
   useEffect(() => {
+    console.log("TOKEN:", localStorage.getItem("token"));
     const initAuth = async () => {
       try {
         const res = await api.get("/api/auth/is-auth");
@@ -112,12 +115,14 @@ export const AuthProvider = ({ children }) => {
 
       const { token, user } = res.data;
 
-      // Save token (if using JWT)
+      // ✅ Save token
       if (token) {
         localStorage.setItem("token", token);
       }
 
+      // ✅ Set user in context
       setUser(user);
+
       return { success: true, user };
     } catch (err) {
       const message = err.response?.data?.message || "Login failed";
