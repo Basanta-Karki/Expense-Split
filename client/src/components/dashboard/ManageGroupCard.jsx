@@ -64,13 +64,13 @@ const ManageGroupCard = ({ group }) => {
         </div>
         <div className="bg-slate-800/50 rounded-lg p-4 text-center border border-slate-700/50">
           <p className="text-2xl font-bold text-green-400 mb-1">
-            ₹{group.perPerson}
+            ${group.perPerson}
           </p>
           <p className="text-slate-400 text-xs">Per Person</p>
         </div>
         <div className="bg-slate-800/50 rounded-lg p-4 text-center border border-slate-700/50">
           <p className="text-2xl font-bold text-orange-400 mb-1">
-            ₹{group.totalExpenses}
+            ${group.totalExpenses}
           </p>
           <p className="text-slate-400 text-xs">Total</p>
         </div>

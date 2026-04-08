@@ -32,7 +32,7 @@ const ViewExpenseModal = ({ expense, isOpen, onClose }) => {
               <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
                 <p className="text-slate-400 text-xs mb-0.5">Total</p>
                 <p className="text-lg font-bold text-white">
-                  ₹{expense.amount?.toLocaleString()}
+                  ${expense.amount?.toLocaleString()}
                 </p>
               </div>
               <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
@@ -78,7 +78,7 @@ const ViewExpenseModal = ({ expense, isOpen, onClose }) => {
                       </p>
                     </div>
                     <p className="text-sm font-bold text-blue-400">
-                      ₹{perPerson?.toFixed(0)}
+                      ${perPerson?.toFixed(0)}
                     </p>
                   </div>
                 ))}
