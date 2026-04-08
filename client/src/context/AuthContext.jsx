@@ -1,0 +1,196 @@
+// import React, { createContext, useState, useEffect } from "react";
+
+// export const AuthContext = createContext();
+
+// export const AuthProvider = ({ children }) => {
+//   const [user, setUser] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   // Check if user is logged in on mount
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     const userData = localStorage.getItem("user");
+
+//     if (token && userData) {
+//       setUser(JSON.parse(userData));
+//     }
+//     setLoading(false);
+//   }, []);
+
+//   const login = async (email, password) => {
+//     try {
+//       setError(null);
+//       const response = await authAPI.login({ email, password });
+//       const { token, user } = response.data;
+
+//       localStorage.setItem("token", token);
+//       localStorage.setItem("user", JSON.stringify(user));
+
+//       setUser(user);
+//       return { success: true, user };
+//     } catch (err) {
+//       const message = err.response?.data?.message || "Login failed";
+//       setError(message);
+//       return { success: false, error: message };
+//     }
+//   };
+
+//   const register = async (name, email, password) => {
+//     try {
+//       setError(null);
+//       const response = await authAPI.register({ name, email, password });
+//       const { token, user } = response.data;
+
+//       localStorage.setItem("token", token);
+//       localStorage.setItem("user", JSON.stringify(user));
+
+//       setUser(user);
+//       return { success: true, user };
+//     } catch (err) {
+//       const message = err.response?.data?.message || "Registration failed";
+//       setError(message);
+//       return { success: false, error: message };
+//     }
+//   };
+
+//   const logout = () => {
+//     localStorage.removeItem("token");
+//     localStorage.removeItem("user");
+//     setUser(null);
+//   };
+
+//   return (
+//     <AuthContext.Provider
+//       value={{ user, loading, error, login, register, logout }}
+//     >
+//       {children}
+//     </AuthContext.Provider>
+//   );
+// };
+
+import React, { createContext, useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import api from "../api/api";
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const queryClient = useQueryClient();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // ✅ Check auth state on app load
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        const res = await api.get("/api/auth/is-auth");
+
+        if (res.data.success) {
+          setUser(res.data.user);
+        } else {
+          setUser(null);
+        }
+      } catch (err) {
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+  }, []);
+
+  // ✅ Login
+  const login = async (email, password) => {
+    try {
+      setError(null);
+
+      const res = await api.post("/api/auth/login", {
+        email,
+        password,
+      });
+
+      const { token, user } = res.data;
+
+      // Save token (if using JWT)
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+
+      setUser(user);
+      return { success: true, user };
+    } catch (err) {
+      const message = err.response?.data?.message || "Login failed";
+      setError(message);
+      return { success: false, error: message };
+    }
+  };
+
+  // ✅ Register
+  const register = async (name, email, password) => {
+    try {
+      setError(null);
+
+      const res = await api.post("/api/auth/register", {
+        name,
+        email,
+        password,
+      });
+
+      const { token, user } = res.data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+
+      setUser(user);
+      return { success: true, user };
+    } catch (err) {
+      const message = err.response?.data?.message || "Registration failed";
+      setError(message);
+      return { success: false, error: message };
+    }
+  };
+
+  // ✅ Logout — clear UI state immediately; server call is best-effort (never block on network)
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("activeGroupId");
+    queryClient.clear();
+    setUser(null);
+    void api.post("/api/auth/logout").catch((err) => {
+      console.log("Logout API error:", err.message);
+    });
+  };
+
+  // ✅ Get latest user data (optional but useful)
+  const getUserData = async () => {
+    try {
+      const res = await api.get("/api/user/data");
+      if (res.data.success) {
+        setUser(res.data.user);
+      }
+    } catch (err) {
+      console.error("Failed to fetch user data");
+    }
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        error,
+        login,
+        register,
+        logout,
+        getUserData,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
