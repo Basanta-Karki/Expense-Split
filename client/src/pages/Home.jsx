@@ -376,8 +376,8 @@ const Home = () => {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <div className="shrink-0 flex items-center gap-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <FaReceipt className="text-white text-lg" />
+                <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center font-bold text-white text-sm">
+                  ⚡
                 </div>
                 <span className="font-bold text-gray-900">
                   Expense Splitter

@@ -91,7 +91,7 @@
 //             </div>
 //             <div>
 //               <label className="block text-slate-300 text-sm font-medium mb-2">
-//                 Amount (₹)
+//                 Amount ($)
 //               </label>
 //               <input
 //                 type="number"
@@ -461,7 +461,7 @@ const AddExpenseModal = ({
             {/* Amount */}
             <div>
               <label className="block text-slate-300 text-sm font-medium mb-2">
-                Amount (₹)
+                Amount ($)
               </label>
               <input
                 type="number"

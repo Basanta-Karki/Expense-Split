@@ -53,7 +53,7 @@ const ChartsSection = ({ expenseTrendsData, categoryData }) => {
               outerRadius={100}
               paddingAngle={5}
               dataKey="value"
-              label={({ name, value }) => `${name} ₹${value}`}
+              label={({ name, value }) => `${name} $${value}`}
               labelLine={false}
             >
               {categoryData.map((entry, index) => (

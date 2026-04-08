@@ -15,7 +15,7 @@ const CreateNewGroup = () => {
     "USD ($)",
     "EUR (€)",
     "GBP (£)",
-    "INR (₹)",
+    "INR ($)",
     "JPY (¥)",
     "AUD (A$)",
     "CAD (C$)",

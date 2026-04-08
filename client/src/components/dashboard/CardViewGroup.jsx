@@ -21,7 +21,7 @@ const CardViewGroup = ({ group, onViewDetails }) => {
             Total Expenses
           </p>
           <p className="text-2xl font-bold text-white">
-            ₹{group.totalExpenses.toLocaleString()}
+            ${group.totalExpenses.toLocaleString()}
           </p>
         </div>
 
@@ -31,7 +31,7 @@ const CardViewGroup = ({ group, onViewDetails }) => {
             <p
               className={`text-lg font-bold ${group.youOwe > 0 ? "text-red-400" : "text-green-400"}`}
             >
-              ₹{group.youOwe}
+              ${group.youOwe}
             </p>
           </div>
           <div>
@@ -41,7 +41,7 @@ const CardViewGroup = ({ group, onViewDetails }) => {
             <p
               className={`text-lg font-bold ${group.youAreOwed > 0 ? "text-green-400" : "text-red-400"}`}
             >
-              ₹{group.youAreOwed}
+              ${group.youAreOwed}
             </p>
           </div>
         </div>

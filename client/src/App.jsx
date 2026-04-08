@@ -21,6 +21,11 @@ import ExpenseDashboard from "./components/ExpenseDashboard.jsx";
 import Expenses from "./components/Expenses.jsx";
 import Settings from "./components/Settings.jsx";
 
+import AdminDashboard from "./components/Admin/AdminDashboard.jsx";
+import AdminUsers from "./components/Admin/AdminUsers.jsx";
+import AdminExpenses from "./components/Admin/AdminExpenses.jsx";
+import AdminGroups from "./components/Admin/AdminGroups.jsx";
+
 function App() {
   return (
     <div className="main">
@@ -38,12 +43,10 @@ function App() {
               <Route path="/reset-password" element={<ResetPassword />} />
               {/* <Route path="/dashboard/:id" element={<Dashboard />} /> */}
               {/*  */}
-
               <Route
                 path="/expense-tracker/:id/dashboard"
                 element={<ExpenseDashboard />}
               />
-
               {/* Expenses List Page */}
               <Route
                 path="/expense-tracker/:id/expenses"
@@ -54,6 +57,14 @@ function App() {
                 element={<Settings />}
               />
 
+              {/* Admin Dashboard Routes */}
+              <Route path="/admin-dashboard" element={<AdminDashboard />} />
+              <Route path="/admin-dashboard/users" element={<AdminUsers />} />
+              <Route
+                path="/admin-dashboard/expenses"
+                element={<AdminExpenses />}
+              />
+              <Route path="/admin-dashboard/groups" element={<AdminGroups />} />
               {/* Protected Routes */}
               {/* <Route
                 path="/dashboard"
@@ -64,12 +75,6 @@ function App() {
                   </ProtectedRoute>
                 }
               /> */}
-
-              {/* <Route path="/groups/create" element={<CreateNewGroup />} />
-              <Route path="/groups" element={<Groups />} />
-              <Route path="/groups/:id" element={<ViewGroup />} /> */}
-
-              {/* Catch all */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </div>

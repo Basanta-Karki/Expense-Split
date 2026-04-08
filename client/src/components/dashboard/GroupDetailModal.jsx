@@ -33,7 +33,7 @@ const GroupDetailModal = ({ group, isOpen, onClose }) => {
                   <p className="text-slate-400 text-xs">Total Expenses</p>
                 </div>
                 <p className="text-lg font-bold text-white">
-                  ₹{group.totalExpenses.toLocaleString()}
+                  ${group.totalExpenses.toLocaleString()}
                 </p>
               </div>
               <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50 text-center">
@@ -49,7 +49,7 @@ const GroupDetailModal = ({ group, isOpen, onClose }) => {
                   <p className="text-slate-400 text-xs">Per Person</p>
                 </div>
                 <p className="text-lg font-bold text-white">
-                  ₹{group.perPerson.toLocaleString()}
+                  ${group.perPerson.toLocaleString()}
                 </p>
               </div>
             </div>
@@ -84,7 +84,7 @@ const GroupDetailModal = ({ group, isOpen, onClose }) => {
                           : "bg-red-500/20 text-red-400 border border-red-500/30"
                       }`}
                     >
-                      {member.balance > 0 ? "+" : ""}₹{Math.abs(member.balance)}
+                      {member.balance > 0 ? "+" : ""}${Math.abs(member.balance)}
                     </div>
                   </div>
                 ))}
@@ -106,7 +106,7 @@ const GroupDetailModal = ({ group, isOpen, onClose }) => {
                         {expense.title}
                       </p>
                       <p className="text-white font-bold text-sm">
-                        ₹{expense.amount.toLocaleString()}
+                        ${expense.amount.toLocaleString()}
                       </p>
                     </div>
                     <div className="flex items-center justify-between">

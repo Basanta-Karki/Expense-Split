@@ -186,13 +186,13 @@ const ExpenseDashboard = () => {
     },
     {
       label: "Total Spent",
-      value: "₹7,245",
+      value: "$ 7,245",
       subtext: "This month",
       color: "text-green-400",
     },
     {
       label: "You Owe",
-      value: "₹1,250",
+      value: "$ 1,250",
       subtext: "To settle balances",
       color: "text-red-400",
     },

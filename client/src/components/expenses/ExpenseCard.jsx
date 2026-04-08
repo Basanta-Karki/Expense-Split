@@ -17,7 +17,7 @@ const ExpenseCard = ({ expense, onClick }) => {
               <h3 className="text-white font-semibold truncate">
                 {expense.title}
               </h3>
-              <span className="px-2 py-0.5 text-xs bg-blue-600/20 text-blue-400 border border-blue-600/30 rounded font-medium flex-shrink-0">
+              <span className="px-2 py-0.5 text-xs bg-blue-600/20 text-blue-400 border border-blue-600/30 rounded font-medium shrink-0">
                 {expense.group}
               </span>
             </div>
@@ -26,10 +26,10 @@ const ExpenseCard = ({ expense, onClick }) => {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-4 flex-shrink-0">
+        <div className="flex items-center gap-4 shrink-0">
           <div className="text-right">
             <p className="text-xl font-bold text-white">
-              ₹{expense.amount?.toLocaleString()}
+              ${expense.amount?.toLocaleString()}
             </p>
             <p className="text-slate-400 text-xs">{expense.members} members</p>
           </div>
