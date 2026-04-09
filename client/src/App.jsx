@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -42,7 +42,11 @@ function App() {
 
               <Route
                 path="/expense-tracker/dashboard"
-                element={<ExpenseDashboard />}
+                element={
+                  <ProtectedRoute>
+                    <ExpenseDashboard />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/expense-tracker/:id/dashboard"
@@ -50,9 +54,30 @@ function App() {
               />
 
               {/* Expenses List Page */}
-              <Route path="/expense-tracker/expenses" element={<Expenses />} />
-              <Route path="/expense-tracker/analytics" element={<Analytics />} />
-              <Route path="/expense-tracker/settings" element={<Settings />} />
+              <Route
+                path="/expense-tracker/expenses"
+                element={
+                  <ProtectedRoute>
+                    <Expenses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/expense-tracker/analytics"
+                element={
+                  <ProtectedRoute>
+                    <Analytics />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/expense-tracker/settings"
+                element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Protected Routes */}
               {/* <Route

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"; // ← Added useEffect
 import { Link, useNavigate, useLocation } from "react-router-dom"; // ← Added useLocation
-import axios from "axios";
 import {
   IoMailOutline,
   IoLockClosedOutline,
@@ -10,11 +9,13 @@ import {
 import img from "../images/Expense.png";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "react-toastify";
-import api, { backendUrl } from "../api/api";
+import { backendUrl } from "../api/api";
+import { useAuth } from "../hooks/UseAuth.js";
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation(); // ← Added to read URL params
+  const { login } = useAuth();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -44,23 +45,13 @@ export default function Login() {
     setLoading(true);
     setError("");
 
-    try {
-      const res = await api.post("/api/auth/login", formData, {
-        withCredentials: true,
-      });
+    const result = await login(formData.email, formData.password);
 
-      console.log(res.data);
-      console.log("LOGIN RESPONSE:", res.data);
-
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      localStorage.setItem("token", res.data.token);
-
-      navigate("/expense-tracker/dashboard");
-    } catch (err) {
-      console.error(err);
-      const message =
-        err.response?.data?.message || "Invalid email or password";
+    if (result.success && result.user) {
+      localStorage.setItem("user", JSON.stringify(result.user));
+      navigate("/expense-tracker/dashboard", { replace: true });
+    } else {
+      const message = result.error || "Invalid email or password";
       setError(message);
       toast.error(message);
     }

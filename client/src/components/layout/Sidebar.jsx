@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   FaHome,
@@ -8,7 +8,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { AuthContext } from "../../context/AuthContext";
+import { useAuth } from "../../hooks/UseAuth.js";
 
 const DASHBOARD_PATH = "/expense-tracker/dashboard";
 
@@ -26,15 +26,7 @@ const navLinkClass = ({ isActive }) =>
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { user, logout } = useContext(AuthContext);
-
-  if (!user) {
-    return (
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex items-center justify-center text-slate-400">
-        Loading...
-      </aside>
-    );
-  }
+  const { logout } = useAuth();
 
   const handleLogout = () => {
     logout();
